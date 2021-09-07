@@ -44,3 +44,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# dist zipped files
+sf-*.zip
+debug.log
+
+package-lock.json
+yarn.lock

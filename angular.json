@@ -3,5 +3,44 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "kh-form-validation": {
+      "projectType": "library",
+      "root": "projects/kh-form-validation",
+      "sourceRoot": "projects/kh-form-validation/src",
+      "prefix": "kh",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/kh-form-validation/tsconfig.lib.json",
+            "project": "projects/kh-form-validation/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kh-form-validation/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kh-form-validation/src/test.ts",
+            "tsConfig": "projects/kh-form-validation/tsconfig.spec.json",
+            "karmaConfig": "projects/kh-form-validation/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kh-form-validation/tsconfig.lib.json",
+              "projects/kh-form-validation/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "kh-form-validation"
 }
