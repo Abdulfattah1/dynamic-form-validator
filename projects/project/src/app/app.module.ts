@@ -4,7 +4,6 @@ import { InjectionToken, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { KhFormValidationModule } from 'kh-form-validation';
-import { MyLibModule } from 'my-lib';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +13,6 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     AppRoutingModule,
     KhFormValidationModule,
-    MyLibModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,

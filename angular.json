@@ -65,9 +65,7 @@
               "projects/project/src/favicon.ico",
               "projects/project/src/assets"
             ],
-            "styles": [
-              "projects/project/src/styles.scss"
-            ],
+            "styles": ["projects/project/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -128,9 +126,7 @@
               "projects/project/src/favicon.ico",
               "projects/project/src/assets"
             ],
-            "styles": [
-              "projects/project/src/styles.scss"
-            ],
+            "styles": ["projects/project/src/styles.scss"],
             "scripts": []
           }
         },
@@ -142,9 +138,7 @@
               "projects/project/tsconfig.spec.json",
               "projects/project/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -157,46 +151,6 @@
             "production": {
               "devServerTarget": "project:serve:production"
             }
-          }
-        }
-      }
-    },
-    "my-lib": {
-      "projectType": "library",
-      "root": "projects/my-lib",
-      "sourceRoot": "projects/my-lib/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/my-lib/tsconfig.lib.json",
-            "project": "projects/my-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/my-lib/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/my-lib/src/test.ts",
-            "tsConfig": "projects/my-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/my-lib/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/my-lib/tsconfig.lib.json",
-              "projects/my-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
