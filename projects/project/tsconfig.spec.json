@@ -5,16 +5,14 @@
     "outDir": "../../out-tsc/spec",
     "types": [
       "jasmine"
-    ],
+    ]
   },
   "files": [
-    "src/test.ts"
+    "src/test.ts",
+    "src/polyfills.ts"
   ],
   "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ],
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
 }

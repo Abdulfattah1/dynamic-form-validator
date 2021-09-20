@@ -3,6 +3,7 @@ import { KhFormValidationComponent } from './kh-form-validation.component';
 import { InputValidatorDirective } from './directives/input-validator.directive';
 import { ErrorComponentOneComponent } from './components/error-component-one/error-component-one.component';
 import { ErrorHostElementDirective } from './directives/error-host-element.directive';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,7 @@ import { ErrorHostElementDirective } from './directives/error-host-element.direc
     ErrorComponentOneComponent,
     ErrorHostElementDirective,
   ],
-  imports: [],
+  imports: [CommonModule],
   exports: [
     KhFormValidationComponent,
     InputValidatorDirective,

@@ -2,27 +2,28 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
+  Host,
   Input,
   OnDestroy,
   OnInit,
   Optional,
   Self,
+  SkipSelf,
   ViewContainerRef,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
 import { ValidatorHelperService } from '../helpers/validator-helper.service';
 import { ErrorTypeEnum } from '../models/error-type.enum';
 import { ErrorHostElementDirective } from './error-host-element.directive';
 
 @Directive({
-  selector: '[formControl],[formControlName]',
+  selector: '[formControl],[formControlName],[inputValidator]',
 })
-export class InputValidatorDirective implements OnInit, OnDestroy {
-  @Input() type: ErrorTypeEnum;
+export class InputValidatorDirective implements OnInit {
+  @Input() type = ErrorTypeEnum.Simple;
+  @Input() customErrors;
   componentRef: ComponentRef<any>;
   container: ViewContainerRef;
-  destroy$: Subject<boolean> = new Subject();
   constructor(
     private vcr: ViewContainerRef,
     @Self() private control: NgControl,
@@ -37,9 +38,11 @@ export class InputValidatorDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     /** Subscribe to the control value changes to apply the validators*/
-    this.control.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((_) => {
+    this.control.valueChanges.subscribe((_) => {
       if (this.validatorHelper.hasError(this.control)) {
         this.handleErrors();
+      } else {
+        this.displayError(null);
       }
     });
   }
@@ -61,10 +64,4 @@ export class InputValidatorDirective implements OnInit, OnDestroy {
   }
 
   removeComponent(): void {}
-  ngOnDestroy(): void {
-    /** Used to unsubscribe from all the observables*/
-    this.destroy$.next(true);
-    this.destroy$.complete();
-    this.destroy$.unsubscribe();
-  }
 }

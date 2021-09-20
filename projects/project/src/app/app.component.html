@@ -1,0 +1,32 @@
+<form [formGroup]="form">
+  <div class="field">
+    <div class="control">
+      <div>
+        <input class="input" formControlName="name" placeholder="Name" />
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="terms" />
+        I agree to the <a href="#">terms and conditions</a>
+      </label>
+    </div>
+  </div>
+  <div formGroupName="address" class="field">
+    <div class="field">
+      <div class="control">
+        <input class="input" formControlName="city" placeholder="City" />
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <input class="input" formControlName="country" placeholder="Country" />
+      </div>
+    </div>
+  </div>
+  <div class="control">
+    <button class="button is-link is-small">Submit</button>
+  </div>
+</form>

@@ -1,12 +1,9 @@
 {
   "name": "kh-form-validation",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "peerDependencies": {
     "@angular/common": "^11.0.9",
     "@angular/core": "^11.0.9",
     "rxjs": "^7.3.0"
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
   }
 }

@@ -12,16 +12,18 @@ export class ValidatorHelperService {
   constructor(@Inject(DEFAULT_FORM_ERRORS) private errors) {}
 
   hasError(control: NgControl): boolean {
-    return control.errors ? true : false;
+    return control.control.errors ? true : false;
   }
 
   getErrors(control: NgControl): any {
-    return control.errors ? control.errors : null;
+    return control.control.errors ? control.control.errors : null;
   }
 
   getError(control: NgControl): string {
-    const _errorName = Object.keys(control.errors)[0];
-    return _errorName[this.errors[_errorName]];
+    const _errorName = Object.keys(control.control.errors)[0];
+    const _params = control.control.errors[_errorName];
+    const _errorFun = this.errors[_errorName];
+    return _errorFun(_params);
   }
 
   getComponent(type: ErrorTypeEnum): Type<any> {
