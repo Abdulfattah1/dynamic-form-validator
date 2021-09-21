@@ -25,7 +25,14 @@
         rows="4"
         class="form-control"
         formControlName="address"
+        [customTemplate]="customErrorTemplate"
       ></textarea>
     </div>
   </form>
 </div>
+
+<ng-template #customErrorTemplate let-error>
+  <div class="bg-danger card">
+    <span class="text-white">{{ error }}</span>
+  </div>
+</ng-template>

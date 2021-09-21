@@ -6,6 +6,7 @@ import {
   OnInit,
   Optional,
   Self,
+  TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
@@ -19,9 +20,10 @@ import { ErrorHostElementDirective } from './error-host-element.directive';
 })
 export class InputValidatorDirective implements OnInit {
   @Input() type = ErrorTypeEnum.Simple;
-  @Input() customErrors;
+  @Input()
   componentRef: ComponentRef<any>;
   container: ViewContainerRef;
+  @Input() customTemplate: TemplateRef<any>;
   constructor(
     vcr: ViewContainerRef,
     @Self() private control: NgControl,
@@ -51,6 +53,24 @@ export class InputValidatorDirective implements OnInit {
   }
 
   displayError(error: string): void {
+    if (!!this.customTemplate) {
+      this.renderEmbeddedView(error);
+    } else {
+      this.renderComponent(error);
+    }
+  }
+
+  renderEmbeddedView(error: string): void {
+    if (!!this.customTemplate && error) {
+      this.container.createEmbeddedView(this.customTemplate, {
+        $implicit: error,
+      });
+    } else {
+      this.container.clear();
+    }
+  }
+
+  renderComponent(error: string): void {
     if (!this.componentRef) {
       const _factory = this.resolver.resolveComponentFactory(
         this.khFormValidationService.getComponent(this.type)
