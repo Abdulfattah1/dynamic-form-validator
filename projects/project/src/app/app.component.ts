@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { KhFormValidationService } from 'kh-form-validation';
 
 @Component({
   selector: 'app-root',
@@ -15,25 +18,49 @@ export class AppComponent {
   form: FormGroup;
   control: FormControl;
   customErrors = { required: 'Please accept the terms' };
-  constructor(private builder: FormBuilder) {}
+  constructor(
+    private builder: FormBuilder,
+    private kh: KhFormValidationService
+  ) {}
 
   ngOnInit() {
-    this.control = this.builder.control('', Validators.required);
-
+    this.kh.addValidator(
+      'normalizedNameError',
+      'Please dont add the word test'
+    );
     this.form = this.builder.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(10),
-        ],
-      ],
-      terms: ['', Validators.requiredTrue],
-      address: this.builder.group({
-        city: ['', Validators.required],
-        country: ['', Validators.required],
-      }),
+      name: this.builder.group(
+        {
+          first: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(10),
+            ],
+          ],
+          last: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(10),
+            ],
+          ],
+        },
+        [Validators.required]
+      ),
+      age: [null, [Validators.required]],
+      address: ['', [this.customValidator]],
     });
+  }
+
+  customValidator(control: AbstractControl): ValidationErrors {
+    if (!!control.value && control.value === 'test') {
+      return {
+        normalizedNameError: 'test',
+      };
+    }
+    return null;
   }
 }

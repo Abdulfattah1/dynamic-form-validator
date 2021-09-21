@@ -1,32 +1,31 @@
-<form [formGroup]="form">
-  <div class="field">
-    <div class="control">
-      <div>
-        <input class="input" formControlName="name" placeholder="Name" />
+<div class="container-fluid py-5">
+  <form class="row" [formGroup]="form">
+    <ng-container formGroupName="name">
+      <div class="col-sm-3 form-group pb-3">
+        <label for="firstName" class="pb-2"> First Name </label>
+        <input type="text" formControlName="first" class="form-control" />
       </div>
-    </div>
-  </div>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" formControlName="terms" />
-        I agree to the <a href="#">terms and conditions</a>
-      </label>
-    </div>
-  </div>
-  <div formGroupName="address" class="field">
-    <div class="field">
-      <div class="control">
-        <input class="input" formControlName="city" placeholder="City" />
+      <div class="w-100"></div>
+      <div class="col-sm-3 form-group">
+        <label for="LastName" class="pb-2"> Last Name </label>
+        <input type="text" formControlName="last" class="form-control" />
       </div>
+    </ng-container>
+    <div class="w-100"></div>
+    <div class="col-sm-3 form-group pb-3">
+      <label for="age" class="pb-2"> Age </label>
+      <input type="number" formControlName="age" class="form-control" />
     </div>
-    <div class="field">
-      <div class="control">
-        <input class="input" formControlName="country" placeholder="Country" />
-      </div>
+    <div class="w-100"></div>
+    <div class="col-sm-3 form-group pb-3">
+      <label for="age" class="pb-2"> Address </label>
+      <textarea
+        name="address"
+        id="address"
+        rows="4"
+        class="form-control"
+        formControlName="address"
+      ></textarea>
     </div>
-  </div>
-  <div class="control">
-    <button class="button is-link is-small">Submit</button>
-  </div>
-</form>
+  </form>
+</div>

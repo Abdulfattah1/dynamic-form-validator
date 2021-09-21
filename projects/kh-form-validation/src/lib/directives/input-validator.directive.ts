@@ -2,17 +2,15 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
-  Host,
   Input,
-  OnDestroy,
   OnInit,
   Optional,
   Self,
-  SkipSelf,
   ViewContainerRef,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { ValidatorHelperService } from '../helpers/validator-helper.service';
+import { KhFormValidationService } from '../kh-form-validation.service';
+
 import { ErrorTypeEnum } from '../models/error-type.enum';
 import { ErrorHostElementDirective } from './error-host-element.directive';
 
@@ -25,10 +23,10 @@ export class InputValidatorDirective implements OnInit {
   componentRef: ComponentRef<any>;
   container: ViewContainerRef;
   constructor(
-    private vcr: ViewContainerRef,
+    vcr: ViewContainerRef,
     @Self() private control: NgControl,
     private resolver: ComponentFactoryResolver,
-    private validatorHelper: ValidatorHelperService,
+    private khFormValidationService: KhFormValidationService,
     @Optional() errorHostElementDirective: ErrorHostElementDirective
   ) {
     this.container = errorHostElementDirective
@@ -39,7 +37,7 @@ export class InputValidatorDirective implements OnInit {
   ngOnInit(): void {
     /** Subscribe to the control value changes to apply the validators*/
     this.control.valueChanges.subscribe((_) => {
-      if (this.validatorHelper.hasError(this.control)) {
+      if (this.khFormValidationService.hasError(this.control)) {
         this.handleErrors();
       } else {
         this.displayError(null);
@@ -48,14 +46,14 @@ export class InputValidatorDirective implements OnInit {
   }
 
   handleErrors(): void {
-    const _error = this.validatorHelper.getError(this.control);
+    const _error = this.khFormValidationService.getError(this.control);
     this.displayError(_error);
   }
 
   displayError(error: string): void {
     if (!this.componentRef) {
       const _factory = this.resolver.resolveComponentFactory(
-        this.validatorHelper.getComponent(this.type)
+        this.khFormValidationService.getComponent(this.type)
       );
       this.componentRef = this.container.createComponent(_factory);
     } else {

@@ -65,8 +65,14 @@
               "projects/project/src/favicon.ico",
               "projects/project/src/assets"
             ],
-            "styles": ["projects/project/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "projects/project/src/styles.scss"
+            ],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
