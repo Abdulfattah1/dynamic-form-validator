@@ -63,4 +63,6 @@ export class AppComponent {
     }
     return null;
   }
+
+  submit(): void {}
 }

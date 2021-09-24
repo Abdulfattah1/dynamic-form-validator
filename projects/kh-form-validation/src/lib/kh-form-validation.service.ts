@@ -2,6 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { ErrorTypeEnum } from './models/error-type.enum';
 import { ErrorComponentOneComponent } from './components/error-component-one/error-component-one.component';
+import { Observable, Subject } from 'rxjs';
 export const DEFAULT_ERRORS = {
   required: (_) => `This field is required`,
   minlength: ({ requiredLength, actualLength }) =>
@@ -15,6 +16,7 @@ export const DEFAULT_ERRORS = {
 })
 export class KhFormValidationService {
   errors: { [validatorName: string]: (error: Object) => string };
+
   constructor() {
     this.errors = { ...DEFAULT_ERRORS };
   }

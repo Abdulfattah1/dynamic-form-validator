@@ -1,5 +1,5 @@
-<div class="container-fluid py-5">
-  <form class="row" [formGroup]="form">
+<div class="container-fluid py-5" abd>
+  <form class="row" [formGroup]="form" (ngSubmit)="submit()">
     <ng-container formGroupName="name">
       <div class="col-sm-3 form-group pb-3">
         <label for="firstName" class="pb-2"> First Name </label>
@@ -27,6 +27,9 @@
         formControlName="address"
         [customTemplate]="customErrorTemplate"
       ></textarea>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 </div>
