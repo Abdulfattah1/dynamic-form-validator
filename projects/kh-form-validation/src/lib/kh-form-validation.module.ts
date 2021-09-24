@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { KhFormValidationComponent } from './kh-form-validation.component';
 import { InputValidatorDirective } from './directives/input-validator.directive';
 import { ErrorComponentOneComponent } from './components/error-component-one/error-component-one.component';
@@ -8,6 +8,13 @@ import { FormSubmissionDirective } from './directives/form-submission.directive'
 import { ErrorComponentDirective } from './directives/error-component.directive';
 import { SubmitButtonDirective } from './directives/submit-button.directive';
 import { ComponentBaseDirective } from './directives/component-base.directive';
+import {
+  DEFAULT_INPUT_CONFIG,
+  IinputBorderConfig,
+  InputBorderConfig,
+  INPUT_BORDER_CONFIG,
+} from './models/input-border-config';
+import { InputBorderDirective } from './directives/input-border.directive';
 
 @NgModule({
   declarations: [
@@ -19,6 +26,7 @@ import { ComponentBaseDirective } from './directives/component-base.directive';
     ErrorComponentDirective,
     SubmitButtonDirective,
     ComponentBaseDirective,
+    InputBorderDirective,
   ],
   imports: [CommonModule],
   exports: [
@@ -28,6 +36,24 @@ import { ComponentBaseDirective } from './directives/component-base.directive';
     ErrorHostElementDirective,
     FormSubmissionDirective,
     SubmitButtonDirective,
+    InputBorderDirective,
   ],
 })
-export class KhFormValidationModule {}
+export class KhFormValidationModule {
+  public static forRoot(config: {
+    borderConfig: IinputBorderConfig;
+  }): ModuleWithProviders<KhFormValidationModule> {
+    if (!config || !config?.borderConfig) {
+      config.borderConfig = DEFAULT_INPUT_CONFIG;
+    }
+    return {
+      ngModule: KhFormValidationModule,
+      providers: [
+        {
+          provide: INPUT_BORDER_CONFIG,
+          useFactory: () => new InputBorderConfig(config.borderConfig),
+        },
+      ],
+    };
+  }
+}

@@ -2,6 +2,7 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
+  ElementRef,
   Host,
   Input,
   OnDestroy,
@@ -12,9 +13,8 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { EMPTY, merge, Observable, Subject, takeUntil } from 'rxjs';
+import { EMPTY, merge, Observable, takeUntil } from 'rxjs';
 import { KhFormValidationService } from '../kh-form-validation.service';
-
 import { ErrorTypeEnum } from '../models/error-type.enum';
 import { ComponentBaseDirective } from './component-base.directive';
 import { ErrorHostElementDirective } from './error-host-element.directive';
@@ -38,6 +38,7 @@ export class InputValidatorDirective
     vcr: ViewContainerRef,
     @Self() private control: NgControl,
     private resolver: ComponentFactoryResolver,
+    private host: ElementRef<HTMLButtonElement>,
     private khFormValidationService: KhFormValidationService,
     @Optional() @Host() private form: FormSubmissionDirective,
     @Optional() errorHostElementDirective: ErrorHostElementDirective
@@ -54,7 +55,10 @@ export class InputValidatorDirective
     merge(this.submit$, this.control.valueChanges)
       .pipe(takeUntil(this.destroy$))
       .subscribe((_) => {
-        if (this.khFormValidationService.hasError(this.control)) {
+        if (
+          this.khFormValidationService.hasError(this.control) &&
+          this.showError
+        ) {
           this.handleErrors();
         } else {
           this.displayError(null);
@@ -94,5 +98,11 @@ export class InputValidatorDirective
     this.componentRef.instance.message = error;
   }
 
-  removeComponent(): void {}
+  get showError() {
+    return this.control.dirty || this.control.touched;
+  }
+
+  get element() {
+    return this.host.nativeElement;
+  }
 }

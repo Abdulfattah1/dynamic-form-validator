@@ -1,10 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  Host,
-  Optional,
-  Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, Host, Optional } from '@angular/core';
 import { merge, takeUntil } from 'rxjs';
 import { ComponentBaseDirective } from './component-base.directive';
 import { FormSubmissionDirective } from './form-submission.directive';
@@ -21,8 +15,6 @@ export class SubmitButtonDirective extends ComponentBaseDirective {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     merge(this.form.status$)
       .pipe(takeUntil(this.destroy$))
       .subscribe((status: boolean) => {
