@@ -5,6 +5,9 @@ import { IerrorComponent } from '../models/Ierrors-component';
   selector: '[khErrorComponent]',
 })
 export class ErrorComponentDirective implements IerrorComponent {
+  /**
+   * @property {string} used to hold the error message
+   */
   @Input() set message(message: string) {
     this._message = message;
     this.cdr.detectChanges();

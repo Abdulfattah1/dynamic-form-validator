@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { KhFormValidationComponent } from './kh-form-validation.component';
 import { InputValidatorDirective } from './directives/input-validator.directive';
 import { ErrorComponentOneComponent } from './components/error-component-one/error-component-one.component';
@@ -15,7 +15,14 @@ import {
   INPUT_BORDER_CONFIG,
 } from './models/input-border-config';
 import { InputBorderDirective } from './directives/input-border.directive';
-
+import {
+  KhValidatorDefaultTranslateLoader,
+  KhValidatorTranslateLoader,
+} from '../public-api';
+import { DEFAULT_LANG } from './models/translation/translation.service';
+import { TranslationPipe } from './models/translation/translation.pipe';
+import { TranslationService } from './models/translation/translation.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     KhFormValidationComponent,
@@ -27,8 +34,9 @@ import { InputBorderDirective } from './directives/input-border.directive';
     SubmitButtonDirective,
     ComponentBaseDirective,
     InputBorderDirective,
+    TranslationPipe,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   exports: [
     KhFormValidationComponent,
     InputValidatorDirective,
@@ -40,9 +48,13 @@ import { InputBorderDirective } from './directives/input-border.directive';
   ],
 })
 export class KhFormValidationModule {
-  public static forRoot(config: {
-    borderConfig: IinputBorderConfig;
-  }): ModuleWithProviders<KhFormValidationModule> {
+  public static forRoot(
+    config: {
+      defaultLang?: string;
+      borderConfig?: IinputBorderConfig;
+      loader?: Provider;
+    } = {}
+  ): ModuleWithProviders<KhFormValidationModule> {
     if (!config || !config?.borderConfig) {
       config.borderConfig = DEFAULT_INPUT_CONFIG;
     }
@@ -50,9 +62,18 @@ export class KhFormValidationModule {
       ngModule: KhFormValidationModule,
       providers: [
         {
+          provide: DEFAULT_LANG,
+          useValue: config.defaultLang || 'en',
+        },
+        {
           provide: INPUT_BORDER_CONFIG,
           useFactory: () => new InputBorderConfig(config.borderConfig),
         },
+        config.loader || {
+          provide: KhValidatorTranslateLoader,
+          useClass: KhValidatorDefaultTranslateLoader,
+        },
+        TranslationService,
       ],
     };
   }

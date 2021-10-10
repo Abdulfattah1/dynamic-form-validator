@@ -18,6 +18,11 @@ export class AppComponent {
   form: FormGroup;
   control: FormControl;
   customErrors = { required: 'Please accept the terms' };
+  /**
+   *
+   * @param builder used to create reactive forms
+   * @param kh a service exported from khValidation library
+   */
   constructor(
     private builder: FormBuilder,
     private kh: KhFormValidationService
@@ -55,6 +60,11 @@ export class AppComponent {
     });
   }
 
+  /**
+   *
+   * @param control AbstractControl to validate
+   * @returns error in case the value of the control is test & null otherwhise
+   */
   customValidator(control: AbstractControl): ValidationErrors {
     if (!!control.value && control.value === 'test') {
       return {

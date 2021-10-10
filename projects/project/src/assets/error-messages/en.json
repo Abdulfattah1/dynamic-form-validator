@@ -1,0 +1,3 @@
+{
+  "MIN_LENGTH": "Expect {{requiredLength}} but got {{actualLength}}"
+}

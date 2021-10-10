@@ -1,14 +1,12 @@
-import { Injectable, Type } from '@angular/core';
+import { ChangeDetectorRef, Injectable, Type } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { ErrorTypeEnum } from './models/error-type.enum';
 import { ErrorComponentOneComponent } from './components/error-component-one/error-component-one.component';
-import { Observable, Subject } from 'rxjs';
+import { TranslationService } from './models/translation/translation.service';
 export const DEFAULT_ERRORS = {
-  required: (_) => `This field is required`,
-  minlength: ({ requiredLength, actualLength }) =>
-    `Expect ${requiredLength} but got ${actualLength}`,
-  maxlength: ({ requiredLength, actualLength }) =>
-    `Expect ${requiredLength} but got ${actualLength}`,
+  required: (_) => `REQUIRED`,
+  minlength: ({ requiredLength, actualLength }) => 'MIN_LENGTH',
+  maxlength: ({ requiredLength, actualLength }) => 'MAX_LENGTH',
 };
 
 @Injectable({
@@ -17,7 +15,7 @@ export const DEFAULT_ERRORS = {
 export class KhFormValidationService {
   errors: { [validatorName: string]: (error: Object) => string };
 
-  constructor() {
+  constructor(private translationService: TranslationService) {
     this.errors = { ...DEFAULT_ERRORS };
   }
 
@@ -33,7 +31,8 @@ export class KhFormValidationService {
     const _errorName = Object.keys(control.control.errors)[0];
     const _params = control.control.errors[_errorName];
     const _errorFun = this.errors[_errorName];
-    return _errorFun(_params);
+    const _res = _errorFun(_params);
+    return this.translationService.get(_res, _params);
   }
 
   addValidator(errorName: string, returnedMessage: string): void {

@@ -13,3 +13,4 @@ export * from './lib/directives/input-validator.directive';
 export * from './lib/directives/form-submission.directive';
 export * from './lib/directives/submit-button.directive';
 export * from './lib/directives/input-border.directive';
+export * from './lib/models/translation/translate-loader';

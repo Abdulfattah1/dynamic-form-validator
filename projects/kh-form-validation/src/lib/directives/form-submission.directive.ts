@@ -13,8 +13,17 @@ import {
   selector: '[khFormSubmission],form',
 })
 export class FormSubmissionDirective {
+  /**
+   * @property {Observable} used to subscribe to the form changes
+   */
   change$: Observable<any> = new Observable();
+  /**
+   * @property {fromEvent} used to listen to the submit button
+   */
   submit$ = fromEvent(this.element, 'submit').pipe(shareReplay(1));
+  /**
+   * @property {Observable} used to subscribe to the form status
+   */
   status$: Observable<boolean>;
   constructor(
     @Self() private control: ControlContainer,
